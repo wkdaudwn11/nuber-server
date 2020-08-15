@@ -1,0 +1,8 @@
+{
+  "name": "nuber-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:wkdaudwn11/nuber-server.git",
+  "author": "JangMyungJoo <wkdaudwn1028@gmail.com>",
+  "license": "MIT"
+}
