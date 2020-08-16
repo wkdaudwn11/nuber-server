@@ -71,6 +71,11 @@ class User extends BaseEntity {
     return `${this.firstName} ${this.lastName}`;
   }
 
+  // 넘겨받은 비밀번호(평문)와 암호화된 비밀번호가 일치하는지 체크하여 Boolean값을 리턴해주는 함수
+  public comparePassword(password: string): Promise<boolean> {
+    return bcrypt.compare(password, this.password);
+  }
+
   // insert, update가 일어나기 전에 실행되는 함수 (비밀번호 암호화 하기 위함)
   @BeforeInsert()
   @BeforeUpdate()
