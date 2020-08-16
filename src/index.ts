@@ -1,5 +1,7 @@
 import { Options } from "graphql-yoga";
+import { createConnection } from "typeorm";
 import app from "./app";
+import connectionOptions from "./ormConfig";
 
 // graphql-yoga의 options 변수들
 const PORT: number | string = process.env.PORT || 4000; // 포트
@@ -18,5 +20,7 @@ const handleAppStart = () => {
   console.log(`Listening server on ${PORT}...`);
 };
 
-// app 시작
-app.start(appOptions, handleAppStart);
+// DB 연결 후 app 시작
+createConnection(connectionOptions).then(() => {
+  app.start(appOptions, handleAppStart);
+});
