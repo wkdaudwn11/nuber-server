@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import { Options } from "graphql-yoga";
 import { createConnection } from "typeorm";
 import app from "./app";
@@ -21,6 +23,8 @@ const handleAppStart = () => {
 };
 
 // DB 연결 후 app 시작
-createConnection(connectionOptions).then(() => {
-  app.start(appOptions, handleAppStart);
-});
+createConnection(connectionOptions)
+  .then(() => {
+    app.start(appOptions, handleAppStart);
+  })
+  .catch((error) => console.log(error));
