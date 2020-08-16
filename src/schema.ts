@@ -20,10 +20,10 @@ const allResolvers: any[] = fileLoader(
 );
 
 // 위에서 가져온 모든 graphql파일들을 합치는 작업
-const mergedTypes: string = mergeTypes(allTypes);
+const mergedTypes = mergeTypes(allTypes);
 
 // 위에서 가져온 모든 resolvers파일을 합치는 작업
-const mergedResolvers: any = mergeResolvers(allResolvers);
+const mergedResolvers = mergeResolvers(allResolvers);
 
 const schema = makeExecutableSchema({
   typeDefs: mergedTypes,

@@ -5,4 +5,10 @@ type Greeting2 {
 
 type Query {
   sayBye: String!
+  sayHello: Greeting!
+}
+
+type Greeting {
+  text: String!
+  error: Boolean!
 }
