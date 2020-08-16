@@ -1,8 +1,0 @@
-type Greeting2 {
-  text: String!
-  pending: Boolean!
-}
-
-type Query {
-  sayBye: String!
-}
