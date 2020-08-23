@@ -21,7 +21,7 @@ const resolvers: Resolvers = {
           return {
             ok: true,
             error: null,
-            token: "Coming soon",
+            token: "already, Coming soon",
           };
         } else {
           // 새로운 유저
@@ -32,7 +32,7 @@ const resolvers: Resolvers = {
           return {
             ok: true,
             error: null,
-            token: "Coming soon",
+            token: "Created, Coming soon",
           };
         }
       } catch (error) {

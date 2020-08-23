@@ -36,13 +36,13 @@ class User extends BaseEntity {
   @Column({ type: "text" })
   lastName: string;
 
-  @Column({ type: "int" })
+  @Column({ type: "int", nullable: true })
   age: number;
 
-  @Column({ type: "text" })
+  @Column({ type: "text", nullable: true })
   password: string;
 
-  @Column({ type: "text" })
+  @Column({ type: "text", nullable: true })
   phoneNumber: string;
 
   @Column({ type: "boolean", default: false })
