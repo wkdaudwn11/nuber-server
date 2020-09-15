@@ -1,3 +1,4 @@
+import { sendVerificationSMS } from "./../../../utils/sendSMS";
 import Verification from "../../../entities/Verification";
 import {
   StartPhoneVerificationMutationArgs,
@@ -21,8 +22,13 @@ const resolvers: Resolvers = {
         }
         const newVerification = await Verification.create({
           payload: phoneNumber,
-          target: "PHONE",
+          target: "EMAIL",
         }).save();
+        await sendVerificationSMS(newVerification.payload, newVerification.key);
+        return {
+          ok: true,
+          error: null,
+        };
       } catch (error) {
         return {
           ok: false,
