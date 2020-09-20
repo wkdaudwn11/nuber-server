@@ -4,6 +4,7 @@ import {
   EmailSignInResponse,
 } from "../../../types/graph";
 import { Resolvers } from "../../../types/resolvers";
+import createJWT from "../../../utils/createJWT";
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -25,10 +26,11 @@ const resolvers: Resolvers = {
         const checkPassword = await user.comparePassword(password); // 입력한 비밀번호와 DB에 저장되어 있는 비밀번호 비교
 
         if (checkPassword) {
+          const token = createJWT(user.id);
           return {
             ok: true,
             error: null,
-            token: "Coming Soon!",
+            token,
           };
         } else {
           return {

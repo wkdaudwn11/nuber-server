@@ -3,7 +3,8 @@ import {
   FacebookConnectMutationArgs,
   FacebookConnectResponse,
 } from "./../../../types/graph.d";
-import { Resolvers } from "./../../../types/resolvers.d";
+import { Resolvers } from "../../../types/resolvers";
+import createJWT from "../../../utils/createJWT";
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -18,21 +19,23 @@ const resolvers: Resolvers = {
 
         if (existingUser) {
           // 기존 유저
+          const token = createJWT(existingUser.id);
           return {
             ok: true,
             error: null,
-            token: "already, Coming soon",
+            token,
           };
         } else {
           // 새로운 유저
-          await User.create({
+          const newUser = await User.create({
             ...args,
             profilePhoto: `http://graph.facebook.com/${fbId}/picture?type=square`,
           }).save();
+          const token = createJWT(newUser.id);
           return {
             ok: true,
             error: null,
-            token: "Created, Coming soon",
+            token,
           };
         }
       } catch (error) {
