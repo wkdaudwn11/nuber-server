@@ -5,7 +5,7 @@ const createJWT = (id: number): string => {
     {
       id,
     },
-    ")xphKBkm?J/e%hvaJpJ}ZL7@Xp@9h&V9D<w]SbYQ[F"
+    "secret"
   );
   return token;
 };
