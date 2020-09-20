@@ -1,4 +1,5 @@
 import { GraphQLServer } from "graphql-yoga";
+import { NextFunction, Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import logger from "morgan";
@@ -10,6 +11,11 @@ class App {
   constructor() {
     this.app = new GraphQLServer({
       schema,
+      context: (req) => {
+        return {
+          req: req.request,
+        };
+      },
     });
     this.middleWares();
   }
@@ -17,12 +23,23 @@ class App {
     this.app.express.use(cors());
     this.app.express.use(logger("dev"));
     this.app.express.use(helmet());
+    this.app.express.use(this.jwt);
   };
-  private jwt = async (req, res, next): Promise<void> => {
+
+  /** Custom JWT middleware 함수 */
+  private jwt = async (
+    req,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
     const token = req.get("X-JWT");
     if (token) {
       const user = await decodeJWT(token);
-      console.log(user);
+      if (user) {
+        req.user = user;
+      } else {
+        req.user = undefined;
+      }
     }
     next();
   };
