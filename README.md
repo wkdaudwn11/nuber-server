@@ -24,8 +24,9 @@ GraphQL, Typescript, NodeJS
 
 ### Private Resolvers:
 
-- [ ] Get my Profile
-- [ ] Verify Email
+- [x] Get my Profile
+- [ ] Request Email Verification
+- [ ] Complete Email Verification
 - [ ] Get my Profile
 - [ ] Update my Profile
 - [ ] Toggle Driving Mode
