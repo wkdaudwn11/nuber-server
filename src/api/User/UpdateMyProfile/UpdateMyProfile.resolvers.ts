@@ -4,6 +4,7 @@ import {
   UpdateMyProfileResponse,
 } from "../../../types/graph";
 import { Resolvers } from "../../../types/resolvers";
+import cleanNullArgs from "../../../utils/cleanNullArg";
 import privateResolver from "../../../utils/privateResolver";
 
 const resolvers: Resolvers = {
@@ -16,19 +17,16 @@ const resolvers: Resolvers = {
       ): Promise<UpdateMyProfileResponse> => {
         try {
           const user: User = req.user;
-          const newUser = {};
-          Object.keys(args).forEach((key) => {
-            if (args[key] !== null) {
-              newUser[key] = args[key];
-            }
-          });
+          const newUser = cleanNullArgs(args);
 
           // 비밀번호도 수정하는지 체크하여, 체크한다면 hash값이 들어가게끔 해줘야함. 이렇게 해주면 beforeUpdate 걸어둔 거 덕분에 알아서 됨.
           if (args.password !== null) {
             user.password = args.password;
             user.save();
           }
+
           await User.update({ id: user.id }, { ...newUser });
+
           return {
             ok: true,
             error: null,
