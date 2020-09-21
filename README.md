@@ -27,8 +27,7 @@ GraphQL, Typescript, NodeJS
 - [x] Get my Profile
 - [x] Request Email Verification
 - [x] Complete Email Verification
-- [ ] Get my Profile
-- [ ] Update my Profile
+- [x] Update my Profile
 - [ ] Toggle Driving Mode
 - [ ] Report Location / Orientation
 - [ ] Add Place
