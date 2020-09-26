@@ -1,4 +1,4 @@
-import { GraphQLServer } from "graphql-yoga";
+import { GraphQLServer, PubSub } from "graphql-yoga";
 import { NextFunction, Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
@@ -8,17 +8,23 @@ import decodeJWT from "./utils/decodeJWT";
 
 class App {
   public app: GraphQLServer;
+  public pubSub: any;
+
   constructor() {
+    this.pubSub = new PubSub();
+    this.pubSub.ee.setMaxListeners(99);
     this.app = new GraphQLServer({
       schema,
       context: (req) => {
         return {
           req: req.request,
+          pubSub: this.pubSub,
         };
       },
     });
     this.middleWares();
   }
+
   private middleWares = (): void => {
     this.app.express.use(cors());
     this.app.express.use(logger("dev"));
