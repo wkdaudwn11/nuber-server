@@ -16,9 +16,17 @@ class App {
     this.app = new GraphQLServer({
       schema,
       context: (req) => {
+        /**
+         * index.ts를 봐보면 onConnect() 안에서 인증 검사를 거치고 currentUser 값을 return 해주고 있음
+         * 그 값은 req.connection.context.currentUser <- 이런식으로 담겨서 오게됨.
+         * 이거를 context 라는 값으로 다시 return 해줌.
+         * 근데 이게 구독 관련 기능이 아닌 다른 기능에서는(getMyProfile 과 같은 일반적인 기능들) 없는 값이기 때문에 null처리를 해줘야 함.
+         */
+        const { connection: { context = null } = {} } = req;
         return {
           req: req.request,
           pubSub: this.pubSub,
+          context,
         };
       },
     });

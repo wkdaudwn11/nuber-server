@@ -28,6 +28,11 @@ const appOptions: Options = {
       if (token) {
         const user = await decodeJWT(token);
         if (user) {
+          /**
+           * 여기서 return 해주는 currentUser는
+           * req.connection.context.currentUser  <- 이렇게 담기게 됨.
+           * 이거는 일반적인 HTTP request 아니라 WebSocket connection임.
+           */
           return {
             currentUser: user,
           };
