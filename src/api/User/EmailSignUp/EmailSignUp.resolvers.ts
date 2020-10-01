@@ -29,7 +29,10 @@ const resolvers: Resolvers = {
             verified: true,
           });
           if (phoneVerification) {
-            const newUser = await User.create({ ...args }).save();
+            const newUser = await User.create({
+              ...args,
+              verifiedPhoneNumber: true,
+            }).save();
             if (newUser.email) {
               const emailVerification = await Verification.create({
                 payload: newUser.email,

@@ -24,7 +24,8 @@ const resolvers: Resolvers = {
            * driverUpdate라는 방은 일반 사용자들이 드라이버를 찾기 위해서 구독중일테고
            * 그 방에다가 나 드라이버에요~ 라고 알려주기 위해서 명함 내미는 것임.
            */
-          pubSub.publish("driverUpdate", { DriversSubscription: user });
+          const updatedUser = await User.findOne({ id: user.id });
+          pubSub.publish("driverUpdate", { DriversSubscription: updatedUser });
           return {
             ok: true,
             error: null,

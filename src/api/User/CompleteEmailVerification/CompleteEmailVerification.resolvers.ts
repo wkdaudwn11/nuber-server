@@ -24,8 +24,12 @@ const resolvers: Resolvers = {
               payload: user.email,
             });
             if (verification) {
-              user.verifiedEmail = true;
-              user.save();
+              // user.verifiedEmail = true;
+              // user.save();
+
+              // 이메일 인증 후에 비밀번호 Hash값이 바뀌는 버그가 있어서 코드 수정함.
+              await User.update({ email: user.email }, { verifiedEmail: true });
+
               return {
                 ok: true,
                 error: null,

@@ -7,8 +7,8 @@
 
 const sendEmail = (subject: string, html: string) => {
   const emailData = {
-    from: "itnico.las.me@gmail.com",
-    to: "itnico.las.me@gmail.com",
+    from: "wkdaudwn11@naver.com",
+    to: "wkdaudwn11@naver.com",
     subject,
     html,
   };
@@ -19,5 +19,6 @@ const sendEmail = (subject: string, html: string) => {
 export const sendVerificationEmail = (fullName: string, key: string) => {
   const emailSubject = `${fullName}님 안녕하세요.<br />`;
   const emailBody = `<a href="http://nuber.com/verification/${key}/">여기</a>를 클릭하여 이메일 인증을 진행해주세요.`;
+  console.log(`key > ${key}`);
   return sendEmail(emailSubject, emailBody);
 };
