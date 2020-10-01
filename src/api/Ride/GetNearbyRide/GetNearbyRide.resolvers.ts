@@ -1,14 +1,14 @@
 import { Between, getRepository } from "typeorm";
 import Ride from "../../../entities/Ride";
 import User from "../../../entities/User";
-import { GetNearbyRidesResponse } from "../../../types/graph";
+import { GetNearbyRideResponse } from "../../../types/graph";
 import { Resolvers } from "../../../types/resolvers";
 import privateResolver from "../../../utils/privateResolver";
 
 const resolvers: Resolvers = {
   Query: {
-    GetNearbyRides: privateResolver(
-      async (_, __, { req }): Promise<GetNearbyRidesResponse> => {
+    GetNearbyRide: privateResolver(
+      async (_, __, { req }): Promise<GetNearbyRideResponse> => {
         const user: User = req.user;
 
         /**
@@ -23,30 +23,37 @@ const resolvers: Resolvers = {
              * Between, getRepository에 대한 자세한 주석은 src/api/User/GetNearbyDrivers/GetNearbyDrivers.resolvers.ts에 주석으로 자세히 설명해뒀음.
              * 쉽게 설명하자면, Between을 쓸려면 getRepository로 한 번 감싸고 시작해야함.
              */
-            const rides = await getRepository(Ride).find({
+            const ride = await getRepository(Ride).findOne({
               status: "REQUESTING",
               pickUpLat: Between(lastLat - 0.05, lastLat + 0.05),
               pickUpLng: Between(lastLng - 0.05, lastLng + 0.05),
             });
 
-            return {
-              ok: true,
-              error: null,
-              rides,
-            };
+            if (ride) {
+              return {
+                ok: true,
+                error: null,
+                ride,
+              };
+            } else {
+              return {
+                ok: true,
+                error: null,
+                ride: null,
+              };
+            }
           } catch (error) {
             return {
               ok: false,
               error: error.message,
-              rides: null,
+              ride: null,
             };
           }
         } else {
           return {
             ok: false,
-            error:
-              "당신은 운전자가 아닙니다. 운전자 모드로 전환 후 다시 시도해주세요.",
-            rides: null,
+            error: "You are not a driver",
+            ride: null,
           };
         }
       }
