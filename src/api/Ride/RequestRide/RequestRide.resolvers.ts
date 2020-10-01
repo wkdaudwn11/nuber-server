@@ -16,7 +16,7 @@ const resolvers: Resolvers = {
         { req, pubSub }
       ): Promise<RequestRideResponse> => {
         const user: User = req.user;
-        if (!user.isRiding) {
+        if (!user.isRiding && !user.isDriving) {
           try {
             const ride = await Ride.create({ ...args, passenger: user }).save();
             pubSub.publish("rideRequest", { NearbyRideSubscription: ride });
@@ -37,7 +37,8 @@ const resolvers: Resolvers = {
         } else {
           return {
             ok: false,
-            error: "중복 요청은 할 수 없습니다.",
+            error:
+              "중복 요청 혹은 드라이브 모드 상태 일 때는 요청을 할 수 없습니다.",
             ride: null,
           };
         }
