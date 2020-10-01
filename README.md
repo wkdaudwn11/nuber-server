@@ -1,4 +1,4 @@
-# nuber-server
+# Nuber Server
 
 API Server for the (N)Uber Clone Coding.
 GraphQL, Typescript, NodeJS
@@ -45,6 +45,6 @@ GraphQL, Typescript, NodeJS
 - [x] Create a Chat Room
 - [x] Get Chat Room Messages
 - [x] Send a Chat Message
-- [ ] Subscribe to Chat Room Messages
+- [x] Subscribe to Chat Room Messages
 - [ ] Get Ride History
 - [ ] See Ride Detail
